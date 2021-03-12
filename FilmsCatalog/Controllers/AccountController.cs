@@ -51,7 +51,7 @@ namespace FilmsCatalog.Controllers
                 await _signInManager.SignInAsync(user, false);
                 _logger.LogInformation("User success signup!");
                 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Catalog");
             }
 
             foreach (var error in created.Errors)
@@ -91,7 +91,7 @@ namespace FilmsCatalog.Controllers
                 return Redirect(model.ReturnUrl);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Catalog");
         }
 
         public async Task<IActionResult> Logout()
