@@ -32,6 +32,8 @@ namespace FilmsCatalog
             string DbConnectionString = Configuration.GetConnectionString("DbConnection");
             services.AddDbContext<CatalogContext>(options => options.UseSqlServer(DbConnectionString));
 
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddScoped(typeof(IDatabaseRepository<>), typeof(DatabaseRepository<>));
 
             services.AddDatabaseDeveloperPageExceptionFilter();            
