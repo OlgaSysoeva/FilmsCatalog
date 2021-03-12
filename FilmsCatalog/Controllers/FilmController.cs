@@ -2,12 +2,14 @@
 using FilmsCatalog.Entities;
 using FilmsCatalog.Interfaces;
 using FilmsCatalog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace FilmsCatalog.Controllers
 {
+    [Authorize]
     public class FilmController : Controller
     {
         private readonly IDatabaseRepository<Film> _filmRepository;
@@ -65,7 +67,7 @@ namespace FilmsCatalog.Controllers
             var data = _mapper.Map<Film>(model);
             await _filmRepository.AddAsync(data);
 
-            return RedirectToAction("Catalog", "Index");
+            return RedirectToAction("Index", "Catalog");
         }
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace FilmsCatalog.Controllers
             var filmData = _mapper.Map<Film>(model);
             await _filmRepository.UpdateAsync(filmData);
 
-            return RedirectToAction("Catalog", "Index");
+            return RedirectToAction("Index", "Catalog");
         }
     }
 }
