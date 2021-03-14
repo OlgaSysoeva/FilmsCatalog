@@ -100,7 +100,12 @@ namespace FilmsCatalog.Controllers
                 return View(model);
             }
 
-            var filmData = _mapper.Map<Film>(model);
+            var filmData = await _filmRepository.GetByIdAsync(model.Id);
+            filmData.IssueYear = model.IssueYear;
+            filmData.Name = model.Name;
+            filmData.Poster = model.Poster;
+            filmData.Producer = model.Producer;
+
             await _filmRepository.UpdateAsync(filmData);
 
             _logger.LogDebug("Update film: ", @filmData);
