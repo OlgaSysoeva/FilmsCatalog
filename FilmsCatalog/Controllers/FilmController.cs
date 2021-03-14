@@ -67,6 +67,8 @@ namespace FilmsCatalog.Controllers
             var data = _mapper.Map<Film>(model);
             await _filmRepository.AddAsync(data);
 
+            _logger.LogDebug("Add film: ", @model);
+
             return RedirectToAction("Index", "Catalog");
         }
 
@@ -100,6 +102,8 @@ namespace FilmsCatalog.Controllers
 
             var filmData = _mapper.Map<Film>(model);
             await _filmRepository.UpdateAsync(filmData);
+
+            _logger.LogDebug("Update film: ", @filmData);
 
             return RedirectToAction("Index", "Catalog");
         }
