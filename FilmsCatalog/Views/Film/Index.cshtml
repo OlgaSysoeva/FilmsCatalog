@@ -1,7 +1,41 @@
-﻿
+﻿@model FilmsCatalog.Models.FilmViewModel
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Просмотр детальной информации";
 }
 
-<h1>Index</h1>
-
+<div class="text-sm">
+    <img class="card-img-top poster-film mb-2" data-src="" alt=""
+         style="height: 450px; width: 306px; display: block;" src=@Model.PosterPath>
+    <div class="form-row mb-1">
+        <label asp-for="Name" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext form-control-sm" value="@Model.Name">
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="Description" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-8">
+            <span class="form-control-plaintext form-control-sm">@Model.Description</span>
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="IssueYear" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext form-control-sm" value="@Model.IssueYear">
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="Producer" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext form-control-sm" value="@Model.Producer">
+        </div>
+    </div>
+    
+    <div class="form-row mb-1">
+        <div class="m-2">
+            <a asp-controller="Catalog" asp-action="Index"
+               class="btn btn-outline-secondary btn-sm">Назад</a>
+        </div>
+    </div>
+</div>
