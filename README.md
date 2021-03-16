@@ -1,4 +1,4 @@
-## Тестовое задание на вакансию Asp.Net Core разработчик
+## Тестовое задание
 Результат можно посмотреть в gif: https://media.giphy.com/media/Iz9BuiMSQqoshXC6Q0/giphy.gif
 
 #### Суть задания
