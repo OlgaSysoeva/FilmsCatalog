@@ -8,7 +8,8 @@
 }
 
 <h5 class="m-3">@ViewBag.Title</h5>
-<form asp-controller="Film" asp-action="Add" enctype="multipart/form-data" asp-anti-forgery="true" method="post" class="mt-5 text-sm">
+<form asp-controller="Film" asp-action="Add" enctype="multipart/form-data" asp-anti-forgery="true" 
+      method="post" class="mt-5 text-sm" autocomplete="off">
     <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
     <div class="form-row mb-1">
         <label class="col-sm-4 col-form-label" asp-for="Name"></label>
@@ -21,7 +22,7 @@
         <label asp-for="Description" class="col-sm-4"></label>
         <div class="col-sm-4 text-counter">
             <textarea type="text" class="form-control form-control-sm"
-                      asp-for="Description" rows="2" autocomplete="off"></textarea>
+                      asp-for="Description" rows="2"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
