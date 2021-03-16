@@ -24,7 +24,7 @@ namespace FilmsCatalog.Data
                 .IsRequired();
 
             modelBuilder.Entity<Film>()
-                .Property(f => f.Poster)
+                .Property(f => f.UserId)
                 .IsRequired();
 
             base.OnModelCreating(modelBuilder);
