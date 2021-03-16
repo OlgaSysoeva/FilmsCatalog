@@ -10,7 +10,9 @@ namespace FilmsCatalog.Models
     {
         public AutoMapperProfile()
         {
-            CreateMap<Film, FilmViewModel>().ReverseMap();
+            CreateMap<FilmViewModel, Film>().ReverseMap();
+
+            CreateMap<FilmAddViewModel, Film>();
         }
     }
 }
