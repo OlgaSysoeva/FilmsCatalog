@@ -2,10 +2,8 @@
 
 namespace FilmsCatalog.Models
 {
-    public class FilmViewModel
+    public class FilmAddViewModel
     {
-        public int Id { get; set; }
-
         /// <summary>
         /// Название.
         /// </summary>
@@ -34,13 +32,9 @@ namespace FilmsCatalog.Models
         public string Producer { get; set; }
 
         /// <summary>
-        /// Пользователь, добавивший фильм.
-        /// </summary>
-        public string UserId { get; set; }
-
-        /// <summary>
         /// Изображение постера.
         /// </summary>
+        [Display(Name = "Постер")]
         public string PosterPath { get; set; }
     }
 }

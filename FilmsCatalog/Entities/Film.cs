@@ -30,11 +30,11 @@
         /// <summary>
         /// Пользователь, добавивший фильм.
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// Изображение постера.
         /// </summary>
-        public byte[] Poster { get; set; }
+        public string PosterPath { get; set; }
     }
 }

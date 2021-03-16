@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FilmsCatalog.Interfaces
@@ -37,10 +39,27 @@ namespace FilmsCatalog.Interfaces
         Task UpdateAsync(T entity);
 
         /// <summary>
+        /// Находит количество записей.
+        /// </summary>
+        /// <returns></returns>
+        Task<int> CountAsync();
+
+        /// <summary>
         /// Удаляет данные из базы.
         /// </summary>
         /// <param name="entity">Информация для удаления.</param>
         /// <returns></returns>
         Task DeleteAsync(T entity);
+
+        /// <summary>
+        /// Получает часть информации из базы.
+        /// </summary>
+        /// <typeparam name="TOrderBy">Тип поля сортировки.</typeparam>
+        /// <param name="orderBy">Параметры сортировки.</param>
+        /// <param name="skip">Индекс для начала отбора.</param>
+        /// <param name="take">Количество отбираемых данных.</param>
+        /// <returns></returns>
+        Task<IEnumerable<T>> GetFilmsPageAsync<TOrderBy>(
+            Expression<Func<T, TOrderBy>> orderBy, int skip, int take);
     }
 }
