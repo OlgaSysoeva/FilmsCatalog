@@ -1,7 +1,58 @@
-﻿
+﻿@model FilmsCatalog.Models.FilmAddViewModel;
+
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Добавление нового фильма в каталог";
 }
 
-<h1>Add</h1>
+@section Scripts {
+}
+
+<h5 class="m-3">@ViewBag.Title</h5>
+<form asp-controller="Film" asp-action="Add" enctype="multipart/form-data" asp-anti-forgery="true" method="post" class="mt-5 text-sm">
+    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="form-row mb-1">
+        <label class="col-sm-4 col-form-label" asp-for="Name"></label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="Description" class="col-sm-4"></label>
+        <div class="col-sm-4 text-counter">
+            <textarea type="text" class="form-control form-control-sm"
+                      asp-for="Description" rows="2" autocomplete="off"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="IssueYear" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-4">
+            <input type="number" class="form-control" min="1000" max=@DateTime.Today.Year asp-for="IssueYear">
+            <span asp-validation-for="IssueYear" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="Producer" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" asp-for="Producer">
+            <span asp-validation-for="Producer" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row mb-1">
+        <label asp-for="PosterPath" class="col-sm-4 col-form-label"></label>
+        <div class="col-sm-4">
+            <input type="file" accept=".png, .jpg, .jpeg" name="uploadedFile">
+        </div>
+    </div>
+
+    <div class="form-row mb-1">
+        <div class="m-2">
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Добавить</button>
+        </div>
+        <div class="m-2">
+            <a class="btn btn-outline-secondary btn-sm" asp-controller="Catalog" asp-action="Index">Отмена</a>
+        </div>
+    </div>
+</form>
 
