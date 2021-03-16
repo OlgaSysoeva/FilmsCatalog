@@ -1,5 +1,8 @@
 ## Тестовое задание
-Результат можно посмотреть в gif: https://media.giphy.com/media/Iz9BuiMSQqoshXC6Q0/giphy.gif
+
+Результат можно посмотреть в gif: https://drive.google.com/file/d/1-iXS6PqH0u1SPloYQNEw-pd-4tPhmCZ-/view?usp=sharing
+
+![Результат работы](https://i.giphy.com/media/Iz9BuiMSQqoshXC6Q0/giphy.webp)
 
 #### Суть задания
 
