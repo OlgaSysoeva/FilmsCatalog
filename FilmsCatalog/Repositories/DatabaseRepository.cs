@@ -1,7 +1,11 @@
 ﻿using FilmsCatalog.Data;
 using FilmsCatalog.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FilmsCatalog.Repositories
@@ -22,6 +26,10 @@ namespace FilmsCatalog.Repositories
 
             return entity;
         }
+        public async Task<int> CountAsync()
+        {
+            return await CatalogContext.Set<T>().CountAsync();
+        }
 
         public async Task DeleteAsync(T entity)
         {
@@ -36,13 +44,24 @@ namespace FilmsCatalog.Repositories
 
         public async Task<IEnumerable<T>> ListAllAsync()
         {
-            return await CatalogContext.Set<T>().ToListAsync();
+            return await CatalogContext.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public async Task UpdateAsync(T entity)
         {
             CatalogContext.Entry(entity).State = EntityState.Modified;
             await CatalogContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetFilmsPageAsync<TOrderBy>(
+            Expression<Func<T, TOrderBy>> orderBy, int skip, int take)
+        {
+            return await CatalogContext.Set<T>()
+                .AsNoTracking()
+                .OrderBy(orderBy)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
         }
     }
 }
