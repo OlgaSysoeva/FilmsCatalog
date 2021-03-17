@@ -64,9 +64,10 @@ namespace FilmsCatalog.Controllers
         public async Task<IActionResult> GetFilms(int pageSize, int pageNumber)
         {
             var filmsCount = await _filmRepository.CountAsync();
+
             var currentUser = _userManager.GetUserId(User);
 
-            if (filmsCount == 0)
+            if (filmsCount == 0 || pageNumber == 0 || pageSize == 0)
             {
                 var catalog = new CatalogViewModel
                 {
@@ -86,17 +87,9 @@ namespace FilmsCatalog.Controllers
             var filmDatas = await _filmRepository.GetFilmsPageAsync<string>(
                 x => x.Name, startIndex, pageSize);
 
-            var models = Enumerable.Empty<FilmViewModel>();
-            try
-            {
-                models = _mapper.Map<IEnumerable<FilmViewModel>>(filmDatas);
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError("Error of mapper: Film to FilmViewModel: {ex}", ex);   
-            }
+            var models = _mapper.Map<IEnumerable<FilmViewModel>>(filmDatas);
 
-            foreach (var film in models.Where(x => x.PosterPath == null))
+            foreach (var film in models?.Where(x => x.PosterPath == null))
                 film.PosterPath = _filesCongigModel.DefaultFilePath;
 
             var catalogViewModel = new CatalogViewModel
@@ -110,6 +103,6 @@ namespace FilmsCatalog.Controllers
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
-        }
+            }
     }
 }
