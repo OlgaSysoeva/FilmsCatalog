@@ -49,8 +49,15 @@ namespace FilmsCatalog.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int idFilm)
         {
+            if (idFilm <= 0)
+                return BadRequest();
+
             var filmData = await _filmRepository.GetByIdAsync(idFilm);
-            var model = _mapper.Map<FilmViewModel>(filmData);
+
+            if (filmData == null)
+                return NotFound();
+
+            var model = _mapper.Map<FilmViewModel>(filmData);         
 
             return View(model);
         }
@@ -105,9 +112,20 @@ namespace FilmsCatalog.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int idFilm)
         {
+            if (idFilm <= 0)
+            {
+                return BadRequest();
+            }
+
             var filmData = await _filmRepository.GetByIdAsync(idFilm);
+
+            if (filmData == null)
+            {
+                return NotFound();
+            }
+
             var model = _mapper.Map<FilmViewModel>(filmData);
-            model.PosterPath = model.PosterPath ?? _filesCongigModel.DefaultFilePath;
+            model.PosterPath ??= _filesCongigModel.DefaultFilePath;
 
             return View(model);
         }
@@ -127,6 +145,12 @@ namespace FilmsCatalog.Controllers
             }
 
             var filmData = await _filmRepository.GetByIdAsync(model.Id);
+
+            if (filmData == null)
+            {
+                return NotFound();
+            }
+
             filmData.IssueYear = model.IssueYear;
             filmData.Name = model.Name;
             filmData.Producer = model.Producer;
