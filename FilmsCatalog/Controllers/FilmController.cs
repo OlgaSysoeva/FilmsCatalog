@@ -124,6 +124,11 @@ namespace FilmsCatalog.Controllers
                 return NotFound();
             }
 
+            if (_userManager.GetUserId(User) != filmData.UserId)
+            {
+                return Forbid();
+            }
+
             var model = _mapper.Map<FilmViewModel>(filmData);
             model.PosterPath ??= _filesCongigModel.DefaultFilePath;
 
