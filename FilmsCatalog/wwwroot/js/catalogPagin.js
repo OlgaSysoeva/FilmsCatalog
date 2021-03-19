@@ -1,7 +1,7 @@
 ﻿$(function () {
     var currentUser;
     $('#pagination-container').pagination({
-        dataSource: "/Catalog/GetFilms",
+        dataSource: $('#template').data('url'),
         locator: 'films',
         totalNumberLocator: function (response) {
             currentUser = response.currentUser; 
