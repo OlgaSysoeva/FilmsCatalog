@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using FilmsCatalog.Entities;
+using FilmsCatalog.Extensions;
 using FilmsCatalog.Interfaces;
 using FilmsCatalog.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -50,6 +52,8 @@ namespace FilmsCatalog.Controllers
             {
                 return RedirectToAction("SignIn", "Account");;
             }
+
+            ViewBag.RouteUrl = this.Action<CatalogController>(nameof(GetFilms));
 
             return View();
         }
