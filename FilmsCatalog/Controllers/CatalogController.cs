@@ -48,7 +48,7 @@ namespace FilmsCatalog.Controllers
         {
             if (!_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("SignIn", "Account");;
             }
 
             return View();
