@@ -74,7 +74,7 @@ namespace FilmsCatalog.Controllers
             ViewBag.FileInfo = "Допустимые форматы: " + ViewBag.Formats + 
                 ". Максимальный размер файла: " + (_filesCongigModel.Length / (1024 * 1024)) + " Mb.";
 
-            return View(new FilmAddViewModel { });
+            return View(new FilmViewModel { });
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace FilmsCatalog.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(FilmAddViewModel model, IFormFile uploadedFile)
+        public async Task<IActionResult> Add(FilmViewModel model, IFormFile uploadedFile)
         {
             if (uploadedFile != null)
             {
