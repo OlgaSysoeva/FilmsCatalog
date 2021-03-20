@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FilmsCatalog.Controllers
@@ -69,6 +70,10 @@ namespace FilmsCatalog.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.Formats = GetStringFormats();
+            ViewBag.FileInfo = "Допустимые форматы: " + ViewBag.Formats + 
+                ". Максимальный размер файла: " + (_filesCongigModel.Length / (1024 * 1024)) + " Mb.";
+
             return View(new FilmAddViewModel { });
         }
 
@@ -81,6 +86,20 @@ namespace FilmsCatalog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(FilmAddViewModel model, IFormFile uploadedFile)
         {
+            if (uploadedFile != null)
+            {
+                if (!IsCorrectFormat(Path.GetExtension(uploadedFile.FileName)))
+                {
+                    ModelState.AddModelError(nameof(model.PosterPath),
+                    "Недопустимый формат данных!");
+                }
+                if (!IsCorrectFileLength(uploadedFile.Length))
+                {
+                    ModelState.AddModelError(nameof(model.PosterPath),
+                        "Размер превышает норму!");
+                }
+            }            
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -182,10 +201,60 @@ namespace FilmsCatalog.Controllers
         /// <returns>Строковое представление пути.</returns>
         private string GetFilePath(string fileName)
         {
-            var fileInfo = new FileInfo(fileName);
-            string fileExt = fileInfo.Extension;
+            string fileExt = Path.GetExtension(fileName);
 
             return _filesCongigModel.SavePath + Guid.NewGuid() + fileExt;
+        }
+
+        /// <summary>
+        /// Формирует строку форматов из массива.
+        /// </summary>
+        /// <returns>Возвращает строку форматов.</returns>
+        private string GetStringFormats()
+        {
+            if (_filesCongigModel.Formats.Length == 0)
+            {
+                return "";
+            }
+
+            var formatStr = "";
+            foreach (var format in _filesCongigModel.Formats)
+            {
+                formatStr += format + ", ";
+            }
+            formatStr = formatStr.Remove(formatStr.Length - 2);
+
+            return formatStr;
+        }
+
+        /// <summary>
+        /// Проверяет допустимость формата файла.
+        /// </summary>
+        /// <param name="format">Формат в виде строки.</param>
+        /// <returns>True если формат допустим.</returns>
+        private bool IsCorrectFormat(string format)
+        {
+            if (_filesCongigModel.Formats.Contains(format))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Проверяет допустимость размера файла.
+        /// </summary>
+        /// <param name="length">Длина файла в байтах.</param>
+        /// <returns>True если размер в допустимых пределах.</returns>
+        private bool IsCorrectFileLength(long length)
+        {
+            if (length > _filesCongigModel.Length)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

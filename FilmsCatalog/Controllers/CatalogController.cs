@@ -50,7 +50,7 @@ namespace FilmsCatalog.Controllers
         {
             if (!_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("SignIn", "Account");;
+                return RedirectToAction("SignIn", "Account");
             }
 
             ViewBag.RouteUrl = this.Action<CatalogController>(nameof(GetFilms));

@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace FilmsCatalog.Models
 {
     /// <summary>
@@ -15,5 +17,15 @@ namespace FilmsCatalog.Models
         /// Путь хранения файлов.
         /// </summary>
         public string SavePath { get; set; }
+
+        /// <summary>
+        /// Размер постера
+        /// </summary>
+        public long Length { get; set; }
+
+        /// <summary>
+        /// Допустимые форматы постера
+        /// </summary>
+        public string[] Formats { get; set; }
     }
 }
