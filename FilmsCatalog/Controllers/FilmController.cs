@@ -151,6 +151,10 @@ namespace FilmsCatalog.Controllers
             var model = _mapper.Map<FilmViewModel>(filmData);
             model.PosterPath ??= _filesCongigModel.DefaultFilePath;
 
+            ViewBag.Formats = GetStringFormats();
+            ViewBag.FileInfo = "Допустимые форматы: " + ViewBag.Formats +
+                ". Максимальный размер файла: " + (_filesCongigModel.Length / (1024 * 1024)) + " Mb.";
+
             return View(model);
         }
 
@@ -163,6 +167,20 @@ namespace FilmsCatalog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(FilmViewModel model, IFormFile uploadedFile)
         {
+            if (uploadedFile != null)
+            {
+                if (!IsCorrectFormat(Path.GetExtension(uploadedFile.FileName)))
+                {
+                    ModelState.AddModelError(nameof(model.PosterPath),
+                    "Недопустимый формат данных!");
+                }
+                if (!IsCorrectFileLength(uploadedFile.Length))
+                {
+                    ModelState.AddModelError(nameof(model.PosterPath),
+                        "Размер превышает норму!");
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
